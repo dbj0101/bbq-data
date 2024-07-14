@@ -3,7 +3,7 @@
 
 drop table if exists bbq.Device
 create table bbq.Device (
-    pKey int identity(1,1) primary KEY,
+    ID int identity(1,1) primary KEY,
     deviceName varchar(50) not null,
     deviceBrandName varchar(50) not null,
     deviceTypeName varchar(50) not null,
@@ -14,22 +14,27 @@ go
 drop table if exists bbq.ProbeMeasurement
 drop table if exists bbq.Probe
 create table bbq.Probe (
-    pKey int identity(1,1) primary KEY,
+    ID int identity(1,1) primary KEY,
     probeName varchar(50) not null,
     probeDesc varchar(200),
-    deviceKey varchar(50) -- FOREIGN key REFERENCES bbq.Device(pKey)
+    deviceID varchar(50) -- FOREIGN key REFERENCES bbq.Device(ID)
 )
 go
 
 drop table if exists bbq.ProbeMeasurement
 create table bbq.ProbeMeasurement (
-    pKey int identity(1,1) primary key,
-    probeKey int, -- FOREIGN key REFERENCES bbq.Probe(pKey),
+    ID int identity(1,1) primary key,
+    probeID int, -- FOREIGN key REFERENCES bbq.Probe(ID),
     [timeStamp] datetime,
     [value] decimal(18,2),
     [valueUnit] varchar(10)
 )
 go
+
+drop table if exists bbq.SmokeCook
+create table bbq.SmokeCook (
+    ID int identity(1,1) primary key
+)
 
 
 

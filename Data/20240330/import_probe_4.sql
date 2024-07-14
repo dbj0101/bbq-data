@@ -1,4 +1,4 @@
-insert into bbq.ProbeMeasurement([timeStamp], [value], [valueUnit], probeKey)
+insert into bbq.ProbeMeasurement([timeStamp], [value], [valueUnit], probeID)
 select '2024-03-30 09:51:00', 177.7, '°F', 4
 union select '2024-03-30 09:52:00', 206.0, '°F', 4
 union select '2024-03-30 09:53:00', 225.5, '°F', 4
