@@ -1,0 +1,187 @@
+{
+	// Place your snippets for sql here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"Select all one line": {
+		"prefix": "ssl",
+		"body": ["select * from "],
+		"description": "Custom select all one line"
+	},
+	"Select top 1 one line": {
+		"prefix": "ssl1",
+		"body": ["select top 1 * from "],
+		"description": "Custom select top 1 all one line"
+	},
+	"Select top 5 one line": {
+		"prefix": "ssl5",
+		"body": ["select top 5 * from "],
+		"description": "Custom select top 5 all one line"
+	},
+	"Select count one line": {
+		"prefix": "sscl",
+		"body": ["select count(1) from "],
+		"description": "Custom select count one line"
+	},
+	"Select top 3 with total count": {
+		"prefix": "ss3",
+		"body": ["select top 3 format(count(1) over(partition by null),'N0') [totalCount], * ",
+				"from "],
+		"description": "Custom top 3 with total count"
+	},
+	"Select top 5 with total count": {
+		"prefix": "ss5",
+		"body": ["select top 5 format(count(1) over(partition by null),'N0') [totalCount], * ",
+				"from "],
+		"description": "Custom top 5 with total count"
+	},
+	"Select top 10 with total count": {
+		"prefix": "ss10",
+		"body": ["select top 10 format(count(1) over(partition by null),'N0') [totalCount], * ",
+				"from "],
+		"description": "Custom top 10 with total count"
+	},
+	"Select top 100 with total count": {
+		"prefix": "ss100",
+		"body": ["select top 100 format(count(1) over(partition by null),'N0') [totalCount], * ",
+				"from ${1:TableName}"],
+		"description": "Custom top 10 with total count"
+	},
+	"Select top 1 with total count": {
+		"prefix": "ss1",
+		"body": ["select top 1 format(count(1) over(partition by null),'N0') [totalCount], * ",
+				"from "],
+		"description": "Custom top 10 with total count"
+	},
+	"Select *": {
+		"prefix": "ssf",
+		"body": ["select * ",
+				"from "],
+		"description": "Custom select all"
+	},
+	"Select top 1 *": {
+		"prefix": "ssf1",
+		"body": ["select top 1 * ",
+				"from "],
+		"description": "Custom select top 1 all"
+	},
+	"Select top 3 *": {
+		"prefix": "ssf3",
+		"body": ["select top 3 * ",
+				"from "],
+		"description": "Custom select top 3 all"
+	},
+	"Select top 5 *": {
+		"prefix": "ssf5",
+		"body": ["select top 5 * ",
+				"from "],
+		"description": "Custom select top 5 all"
+	},
+	"Select top 10 *": {
+		"prefix": "ssf10",
+		"body": ["select top 10 * ",
+				"from "],
+		"description": "Custom select top 10 all"
+	},
+	"Select top 100 *": {
+		"prefix": "ssf100",
+		"body": ["select top 100 * ",
+				"from "],
+		"description": "Custom select top 100 all"
+	},
+	"Search SQL Objects": {
+		"prefix": "searchsql",
+		"body": ["SELECT DISTINCT",
+				"\ts.name as schema_name,",
+				"\to.name AS Object_Name,",
+				"\to.type_desc",
+				"-- select * ",
+				"FROM sys.sql_modules m",
+				"\tINNER JOIN sys.objects o ON m.object_id = o.object_id",
+				"\tleft join sys.schemas s on o.schema_id=s.schema_id",
+				"WHERE m.definition Like '%${1:SearchString}%'"],
+		"description": "Custom query to locate items in SQL"
+	},
+	"SQL Search Objects": {
+		"prefix": "sqlsearch",
+		"body": ["SELECT DISTINCT",
+				"\ts.name as schema_name,",
+				"\to.name AS Object_Name,",
+				"\to.type_desc",
+				"-- select * ",
+				"FROM sys.sql_modules m",
+				"\tINNER JOIN sys.objects o ON m.object_id = o.object_id",
+				"\tleft join sys.schemas s on o.schema_id=s.schema_id",
+				"WHERE m.definition Like '%${1:SearchString}%'"],
+		"description": "Custom query to locate items in SQL"
+	},
+	"Select Running Total with DateInt": {
+		"prefix": "ssrundateint",
+		"body": ["SELECT [dt].[salesYearInt],dt.dateint,",
+				"\tFORMAT([dt].[count], 'N0') TotalRecords,",
+				"\tFORMAT(SUM([count])",
+				"\t\tOVER (ORDER BY salesYearInt, dateInt",
+				"\t\tROWS BETWEEN UNBOUNDED PRECEDING and CURRENT ROW",
+				"\t), 'N0')",
+				"as",
+				"running_total",
+				"FROM (",
+				"\tSELECT i.salesYearInt, dateInt, count(1) [count] -- select top 1 * ",
+				"\tFROM ${1:TableName} i",
+				"\tGROUP BY i.salesYearInt, i.dateint",
+				") dt",
+				"ORDER BY dt.SalesYearInt"
+			],
+		"description": "Custom Running Total with DateInt"
+	},
+	"Select Running Total": {
+		"prefix": "ssrun",
+		"body": ["SELECT [dt].[salesYearInt],",
+				"\tFORMAT([dt].[count], 'N0') TotalRecords,",
+				"\tFORMAT(SUM([count])",
+				"\t\tOVER (ORDER BY salesYearInt",
+				"\t\tROWS BETWEEN UNBOUNDED PRECEDING and CURRENT ROW",
+				"\t), 'N0')",
+				"as",
+				"running_total",
+				"FROM (",
+				"\tSELECT i.salesYearInt, count(1) [count] -- select top 1 * ",
+				"\tFROM ${1:TableName} i",
+				"\tGROUP BY i.salesYearInt",
+				") dt",
+				"ORDER BY dt.SalesYearInt"
+			],
+		"description": "Custom Running Total with DateInt"
+	},
+	"Format Number": {
+		"prefix": "fon",
+		"body": "FORMAT(${1:IntColumn}, 'N0') as [${2:AliasName}]",
+		"description": "Format number for line"
+	},
+	"scflb": {
+	  "prefix": "scflb",
+	  "description": "select COUNT(1) from with line beak",
+	  "body": [
+		"SELECT COUNT(1)",
+		"FROM "
+	  ]
+	},
+	"ssc": {
+	  "prefix": "ssc",
+	  "description": "select COUNT(1) from with line beak",
+	  "body": [
+		"SELECT COUNT(1)",
+		"FROM "
+	  ]
+	},
+		
+}
